@@ -1,0 +1,65 @@
+<!DOCTYPE html>
+<html lang="en">
+
+<head>
+    <meta charset="UTF-8">
+    <meta name="viewport" content="width=device-width, initial-scale=1.0">
+    <title>JOHAN SEONG</title>
+    <script src="https://cdn.tailwindcss.com"></script>
+
+    <style>
+        @keyframes chocoGlow {
+            0%, 100% {
+                text-shadow: 0 0 10px #a16207, 0 0 20px #a16207, 0 0 40px #a16207;
+            }
+            50% {
+                text-shadow: 0 0 20px #854d0e, 0 0 40px #854d0e, 0 0 80px #854d0e;
+            }
+        }
+
+        .glow-text {
+            animation: chocoGlow 2s infinite;
+        }
+
+        @keyframes softShadow {
+            0%, 100% {
+                box-shadow: 0 0 0 rgba(161, 98, 7, 0.3);
+            }
+            50% {
+                box-shadow: 0 0 20px rgba(161, 98, 7, 0.6);
+            }
+        }
+
+        .shadow-effect {
+            animation: softShadow 3s infinite;
+        }
+    </style>
+</head>
+
+<body class="min-h-screen bg-gradient-to-b from-black via-neutral-900 to-[#3e2c1c] text-yellow-600 flex flex-col items-center justify-center p-6 font-sans">
+
+    <h1 class="glow-text text-5xl font-extrabold mb-8 text-center underline decoration-yellow-700 decoration-4">
+        JOHAN SEONG
+    </h1>
+
+    <div class="relative">
+        <div class="absolute top-0 left-1/2 transform -translate-x-1/2 w-64 h-64 rounded-full bg-gradient-to-b from-yellow-900 via-black to-yellow-800 opacity-20 blur-2xl animate-pulse z-0"></div>
+
+        <img class="relative z-10 w-[300px] h-[500px] object-cover rounded-xl border-4 border-yellow-700 shadow-effect transition duration-500 hover:scale-105"
+            src="https://i.pinimg.com/originals/f2/9c/57/f29c57902bc966359f2437aff9ae0ea4.jpg" alt="JOHAN SEONG">
+    </div>
+
+    <button onclick="goBack()"
+        class="mt-6 px-6 py-2 bg-gradient-to-r from-yellow-900 to-yellow-700 rounded-full text-white font-semibold shadow-md hover:scale-105 transition">
+        Go Back
+    </button>
+
+    <script>
+        function goBack() {
+            window.history.back();
+        }
+    </script>
+
+</body>
+
+</html>

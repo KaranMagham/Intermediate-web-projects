@@ -1,0 +1,92 @@
+<!DOCTYPE html>
+<html lang="en">
+
+<head>
+    <meta charset="UTF-8">
+    <meta name="viewport" content="width=device-width, initial-scale=1.0">
+    <title>GOO KIM</title>
+    <script src="https://cdn.tailwindcss.com"></script>
+
+    <style>
+        @keyframes goldGlow {
+
+            0%,
+            100% {
+                text-shadow: 0 0 10px #facc15, 0 0 20px #facc15, 0 0 40px #facc15;
+            }
+
+            50% {
+                text-shadow: 0 0 20px #eab308, 0 0 40px #eab308, 0 0 80px #eab308;
+            }
+        }
+
+        .glow-text {
+            animation: goldGlow 2s infinite;
+        }
+
+        @keyframes softShadow {
+
+            0%,
+            100% {
+                box-shadow: 0 0 0 rgba(0, 0, 0, 0.3);
+            }
+
+            50% {
+                box-shadow: 0 0 20px rgba(0, 0, 0, 0.6);
+            }
+        }
+
+        .soft-shadow {
+            animation: softShadow 3s infinite;
+        }
+        @keyframes glowLine {
+        0%, 100% {
+            box-shadow: 0 0 10px #facc15, 0 0 20px #facc15;
+        }
+        50% {
+            box-shadow: 0 0 20px #eab308, 0 0 40px #eab308;
+        }
+    }
+
+    .glow-line {
+        animation: glowLine 2s infinite;
+    }
+    </style>
+</head>
+
+<body
+    class="min-h-screen bg-gradient-to-b from-gray-900 via-black to-gray-900 text-yellow-400 flex flex-col items-center justify-center p-6 font-sans">
+
+    <h1 class="glow-text text-5xl font-extrabold mb-8 text-center underline decoration-yellow-400 decoration-4">
+        GOO KIM
+    </h1>
+
+    <div class="relative">
+        <div
+            class="absolute top-0 left-1/2 transform -translate-x-1/2 w-64 h-64 rounded-full bg-gradient-to-b from-yellow-500 via-yellow-700 to-black opacity-20 blur-2xl animate-pulse z-0">
+        </div>
+
+        <img class="relative z-10 w-[300px] h-[500px] object-cover rounded-xl border-4 border-yellow-400 soft-shadow transition duration-500 hover:scale-105"
+            src="https://i.pinimg.com/736x/a4/bb/ea/a4bbea0994f8d9bb80dbf9212dd4e1ca.jpg" alt="GOO KIM">
+        <div class="mt-6 flex flex-col items-center gap-2">
+            <div class="w-52 h-1 bg-yellow-400 rounded-full glow-line"></div>
+            <div class="w-40 h-1 bg-yellow-400 rounded-full glow-line"></div>
+        </div>
+        
+
+    </div>
+
+    <button onclick="goBack()"
+        class="mt-6 px-6 py-2 bg-gradient-to-r from-yellow-700 to-black rounded-full text-white font-semibold shadow-md hover:scale-105 transition">
+        Go Back
+    </button>
+
+    <script>
+        function goBack() {
+            window.history.back();
+        }
+    </script>
+
+</body>
+
+</html>

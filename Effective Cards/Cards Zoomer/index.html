@@ -1,0 +1,390 @@
+<!DOCTYPE html>
+<html lang="en">
+
+<head>
+    <meta charset="UTF-8">
+    <meta name="viewport" content="width=device-width, initial-scale=1.0">
+    <script src="https://cdn.tailwindcss.com"></script>
+    <title>3D Character Carousel Fixed</title>
+
+    <style>
+        .carousel-card {
+            transition: all 0.8s cubic-bezier(0.25, 0.8, 0.25, 1);
+            position: absolute;
+            left: 50%;
+            transform: translateX(-50%);
+            transform-origin: center center;
+            transform-style: preserve-3d;
+            will-change: transform, opacity, filter;
+            backface-visibility: hidden;
+        }
+
+        .carousel-container {
+            perspective: 1000px;
+            perspective-origin: center center;
+            display: flex;
+            align-items: center;
+            justify-content: center;
+            height: 100vh;
+            width: 100vw;
+            position: relative;
+        }
+
+        .card-content {
+            transform-style: preserve-3d;
+            border: 2px solid transparent;
+            background: linear-gradient(135deg, rgba(255, 255, 255, 0.1), rgba(255, 255, 255, 0.05));
+            backdrop-filter: blur(10px);
+            border-radius: 1rem;
+            overflow: hidden;
+            position: relative;
+        }
+
+        .card-content::before {
+            content: '';
+            position: absolute;
+            top: 0;
+            left: 0;
+            right: 0;
+            bottom: 0;
+            background: linear-gradient(135deg, rgba(255, 255, 255, 0.1), transparent);
+            pointer-events: none;
+            border-radius: 1rem;
+        }
+
+        .card-image {
+            transition: transform 0.6s ease;
+        }
+
+        .carousel-card.focused .card-image {
+            transform: scale(1.05);
+        }
+
+        .card-title {
+            background: linear-gradient(135deg, #ff6b6b, #4ecdc4, #ff6b6b);
+            -webkit-background-clip: text;
+            -webkit-text-fill-color: transparent;
+            background-clip: text;
+            font-weight: 800;
+            font-size: 1.5rem;
+            letter-spacing: 0.08em;
+            position: relative;
+            z-index: 1;
+            transition: all 0.4s ease;
+            text-shadow:
+                0 0 5px rgba(255, 107, 107, 0.6),
+                0 0 10px rgba(78, 205, 196, 0.6),
+                0 0 20px rgba(255, 107, 107, 0.6),
+                0 0 30px rgba(255, 107, 107, 0.4);
+        }
+
+        .card-title:hover {
+            transform: scale(1.05);
+            text-shadow:
+                0 0 10px rgba(255, 107, 107, 0.7),
+                0 0 20px rgba(78, 205, 196, 0.7),
+                0 0 40px rgba(255, 107, 107, 0.7),
+                0 0 60px rgba(255, 107, 107, 0.5);
+        }
+
+
+        .nav-btn {
+            transition: all 0.3s ease;
+            background: rgba(255, 255, 255, 0.1);
+            backdrop-filter: blur(20px);
+            border: 1px solid rgba(255, 255, 255, 0.2);
+        }
+
+        .nav-btn:hover {
+            background: rgba(255, 107, 107, 0.2);
+            transform: scale(1.1);
+            box-shadow: 0 0 25px rgba(255, 107, 107, 0.4);
+        }
+
+        .progress-indicator {
+            position: absolute;
+            bottom: 2rem;
+            left: 50%;
+            transform: translateX(-50%);
+            display: flex;
+            gap: 0.5rem;
+            z-index: 20;
+        }
+
+        .progress-dot {
+            width: 12px;
+            height: 12px;
+            border-radius: 50%;
+            background: rgba(255, 255, 255, 0.3);
+            cursor: pointer;
+            transition: all 0.3s ease;
+        }
+
+        .progress-dot.active {
+            background: linear-gradient(135deg, #ff6b6b, #4ecdc4);
+            box-shadow: 0 0 15px rgba(255, 107, 107, 0.6);
+            transform: scale(1.3);
+        }
+
+        @media (max-width: 768px) {
+            .carousel-card {
+                width: 240px;
+                height: 50vh;
+            }
+
+            .card-image {
+                height: 80%;
+            }
+
+            .card-title {
+                font-size: 1.2rem;
+            }
+
+            .nav-btn {
+                padding: 0.6rem;
+            }
+
+            .progress-dot {
+                width: 10px;
+                height: 10px;
+            }
+
+            .nav-btn {
+                padding: 0.6rem;
+                top: 45%;
+                /* Slightly higher for smaller screens */
+            }
+
+            #nextBtn {
+                right: 0.8rem;
+            }
+
+            #prevBtn {
+                left: 0.8rem;
+            }
+        }
+
+
+
+        @keyframes float {
+
+            0%,
+            100% {
+                transform: translateY(0px);
+            }
+
+            50% {
+                transform: translateY(-10px);
+            }
+        }
+
+        .carousel-card.focused {
+            animation: float 3s ease-in-out infinite;
+        }
+
+        .background-gradient {
+            background: linear-gradient(135deg, #0a0a0a, #1a1a2e, #16213e);
+            position: relative;
+            overflow: hidden;
+            height: 100vh;
+            width: 100vw;
+        }
+
+        .background-gradient::before {
+            content: '';
+            position: absolute;
+            top: 0;
+            left: 0;
+            right: 0;
+            bottom: 0;
+            background:
+                radial-gradient(circle at 20% 50%, rgba(255, 107, 107, 0.1) 0%, transparent 50%),
+                radial-gradient(circle at 80% 20%, rgba(78, 205, 196, 0.1) 0%, transparent 50%),
+                radial-gradient(circle at 40% 80%, rgba(255, 107, 107, 0.05) 0%, transparent 50%);
+            animation: gradientShift 15s ease infinite;
+        }
+
+        @keyframes gradientShift {
+
+            0%,
+            100% {
+                opacity: 1;
+            }
+
+            50% {
+                opacity: 0.7;
+            }
+        }
+
+        .card-glow {
+            position: absolute;
+            top: -2px;
+            left: -2px;
+            right: -2px;
+            bottom: -2px;
+            background: linear-gradient(135deg, #ff6b6b, #4ecdc4, #ff6b6b);
+            border-radius: 1rem;
+            z-index: -1;
+            opacity: 0;
+            transition: opacity 0.3s ease;
+        }
+
+        .carousel-card.focused .card-glow {
+            opacity: 0.6;
+            animation: pulse 2s ease-in-out infinite;
+        }
+
+        @keyframes pulse {
+
+            0%,
+            100% {
+                opacity: 0.6;
+            }
+
+            50% {
+                opacity: 0.8;
+            }
+        }
+    </style>
+</head>
+
+<body class="background-gradient flex items-center justify-center relative overflow-hidden">
+
+    <!-- Navigation Buttons -->
+    <button id="prevBtn" class="nav-btn absolute left-6 top-1/2 transform -translate-y-1/2 z-20 p-4 rounded-full">
+        <svg xmlns="http://www.w3.org/2000/svg" class="w-8 h-8 text-white" fill="none" viewBox="0 0 24 24"
+            stroke="currentColor">
+            <path stroke-linecap="round" stroke-linejoin="round" stroke-width="2" d="M15 19l-7-7 7-7" />
+        </svg>
+    </button>
+
+    <button id="nextBtn" class="nav-btn absolute right-6 top-1/2 transform -translate-y-1/2 z-20 p-4 rounded-full">
+        <svg xmlns="http://www.w3.org/2000/svg" class="w-8 h-8 text-white" fill="none" viewBox="0 0 24 24"
+            stroke="currentColor">
+            <path stroke-linecap="round" stroke-linejoin="round" stroke-width="2" d="M9 5l7 7-7 7" />
+        </svg>
+    </button>
+
+    <div class="carousel-container">
+        <div id="carousel" class="relative w-full h-[70vh]">
+            <!-- Cards dynamic -->
+        </div>
+    </div>
+
+    <div class="progress-indicator" id="progressIndicator"></div>
+
+    <script>
+        const characters = [
+            { name: "Gun Yamazaki", image: "https://i.pinimg.com/736x/2d/13/9f/2d139f41410dbc4744934909afa01584.jpg" },
+            { name: "Big Daniel", image: "https://wallpaperbat.com/img/7503781-fresh-ass-lookism-wallpaper-pt2-r.jpg" },
+            { name: "Han Sinwoo", image: "https://wallpaperbat.com/img/7504197-lookism-webtoon-wallpaper-free.jpg" },
+            { name: "Samuel Seo", image: "https://wallpaperbat.com/img/7504226-lookism-wallpaper.jpg" },
+            { name: "Zack Lee", image: "https://wallpaperbat.com/img/7503974-download-lookism-lee-jin-sung-wallpaper.jpg" },
+            { name: "Jack Kim", image: "https://wallpaperbat.com/img/7504007-fresh-ass-lookism-wallpaper-pt2-r.jpg" },
+            { name: "Gitae Kim", image: "https://i.pinimg.com/736x/55/a6/e5/55a6e566f36c145040e7dddcf51ca95c.jpg" },
+            { name: "Goo Kim", image: "https://i.pinimg.com/736x/a4/bb/ea/a4bbea0994f8d9bb80dbf9212dd4e1ca.jpg" },
+            { name: "Shingen Yamazaki", image: "https://i.pinimg.com/originals/15/34/c7/1534c749dceb07c71c076d5b2f9e8e28.jpg" },
+            { name: "James Lee", image: "https://i.pinimg.com/originals/ab/c9/8f/abc98f607c351023471907453b126f7d.jpg" }
+        ];
+
+        class Carousel {
+            constructor() {
+                this.carousel = document.getElementById('carousel');
+                this.progressIndicator = document.getElementById('progressIndicator');
+                this.currentIndex = 0;
+                this.isAnimating = false;
+                this.autoPlayInterval = null;
+                this.cards = [];
+
+                this.init();
+            }
+
+            init() {
+                characters.forEach(character => {
+                    const card = document.createElement('div');
+                    card.className = 'carousel-card w-[320px] h-[70vh] text-center';
+                    card.innerHTML = `
+                        <div class="card-glow"></div>
+                        <div class="card-content h-full p-2">
+                            <img src="${character.image}" class="card-image w-full h-[88%] object-cover rounded-lg shadow-2xl"/>
+                            <div class="p-2">
+                                <h3 class="card-title">${character.name}</h3>
+                            </div>
+                        </div>`;
+                    this.carousel.appendChild(card);
+                    this.cards.push(card);
+                });
+
+                characters.forEach((_, index) => {
+                    const dot = document.createElement('div');
+                    dot.className = 'progress-dot';
+                    dot.addEventListener('click', () => this.goToSlide(index));
+                    this.progressIndicator.appendChild(dot);
+                });
+
+                document.getElementById('nextBtn').addEventListener('click', () => this.next());
+                document.getElementById('prevBtn').addEventListener('click', () => this.prev());
+
+                this.update();
+                this.startAutoPlay();
+            }
+
+            update() {
+                this.cards.forEach((card, index) => {
+                    const cardWidth = this.cards[0].offsetWidth;
+                    const offset = (index - this.currentIndex) * (cardWidth + 20); // 20px gap
+
+                    card.style.left = '50%';
+                    if (index === this.currentIndex) {
+                        card.classList.add('focused');
+                        card.style.transform = `translateX(-50%) translateX(${offset}px) rotateY(0deg) scale(1)`;
+                        card.style.opacity = '1';
+                        card.style.filter = 'none';
+                        card.style.zIndex = '10';
+                    } else {
+                        card.classList.remove('focused');
+                        const rotateY = index < this.currentIndex ? '-25deg' : '25deg';
+                        card.style.transform = `translateX(-50%) translateX(${offset}px) rotateY(${rotateY}) scale(0.85)`;
+                        card.style.opacity = '0.4';
+                        card.style.filter = 'blur(2px)';
+                        card.style.zIndex = '1';
+                    }
+                });
+                Array.from(this.progressIndicator.children).forEach((dot, index) => {
+                    dot.classList.toggle('active', index === this.currentIndex);
+                });
+            }
+
+            next() {
+                if (this.isAnimating) return;
+                this.currentIndex = (this.currentIndex + 1) % this.cards.length;
+                this.update();
+            }
+
+            prev() {
+                if (this.isAnimating) return;
+                this.currentIndex = (this.currentIndex - 1 + this.cards.length) % this.cards.length;
+                this.update();
+            }
+
+            goToSlide(index) {
+                if (this.isAnimating || index === this.currentIndex) return;
+                this.currentIndex = index;
+                this.update();
+            }
+
+            startAutoPlay() {
+                this.autoPlayInterval = setInterval(() => {
+                    this.next();
+                }, 2000);
+            }
+        }
+
+        document.addEventListener('DOMContentLoaded', () => {
+            new Carousel();
+        });
+    </script>
+
+</body>
+
+</html>
