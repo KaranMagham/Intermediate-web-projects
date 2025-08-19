@@ -18,9 +18,9 @@ const Navbar = () => {
         <li className="cursor-pointer hover:underline hover:font-bold transition-all duration-300">
           Home
         </li>
-        <li className="cursor-pointer hover:underline hover:font-bold transition-all duration-300">
+        {/* <li className="cursor-pointer hover:underline hover:font-bold transition-all duration-300">
           Task
-        </li>
+        </li> */}
       </ul>
     </nav>
   );
