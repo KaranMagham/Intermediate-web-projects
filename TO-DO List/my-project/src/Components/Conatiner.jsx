@@ -47,14 +47,14 @@ const Main = () => {
         setTodos(JSON.parse(savedTODO));
       } catch (error) {
         console.log(`Fail to load todos: ${error}`)
-        setTodos([])
+        setTodos([])  
       }
     }
     setHasLoaded(true)
   }, [])
 
   return (
-    <div className="min-h-screen bg-gray-800 flex items-center justify-center">
+    <div className="max-h-screen min-h-[85.3vh] bg-gray-800 flex items-center justify-center p-6">
       <div className="bg-gray-700 w-full max-w-md p-6 rounded-2xl shadow-lg">
         <h1 className="text-amber-200 font-bold text-2xl underline mb-6 text-center">
           Your To-Do
