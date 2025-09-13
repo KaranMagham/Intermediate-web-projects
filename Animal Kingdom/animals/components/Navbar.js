@@ -19,7 +19,7 @@ const Navbar = () => {
       {/* 🔷 Top Logo Section */}
       <div>
         <div className='flex items-center px-4 py-4 text-2xl font-bold text-red-600'>
-          <img src="https://cdn-icons.flaticon.com/svg/10506/10506853.svg?token=exp=1755307334~hmac=c165e2fc4bf112e3869b9df09a2f6d30" alt="logo" className='w-10 invert' />
+          <img src="/paw-print.gif" alt="logo" className='w-10 invert' />
           <Link href="/" className={LinkStyles('/')}>
             PawPedia.
           </Link>

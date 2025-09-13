@@ -6,6 +6,7 @@ const nextConfig = {
       'tse2.mm.bing.net',
       'tse3.mm.bing.net',
       'tse4.mm.bing.net',
+      'tse5.mm.bing.net'
     ],
   },
 };

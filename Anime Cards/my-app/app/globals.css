@@ -1,0 +1,19 @@
+@import "tailwindcss";
+
+/* Global comfort tweaks */
+html {
+  scroll-behavior: smooth;
+}
+
+body {
+  line-height: 1.6;
+}
+
+a {
+  text-underline-offset: 2px;
+}
+
+.gif-transparent {
+  mix-blend-mode: multiply;
+  background: transparent;
+}

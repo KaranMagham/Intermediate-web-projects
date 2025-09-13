@@ -1,5 +1,4 @@
-const NINJAS_API_URL = "https://api.api-ninjas.com/v1/animals";
-const NINJAS_API_KEY = process.env.NINJAS_API_KEY;
+const JIKAN_API_URL = "https://api.jikan.moe/v4";
 
 export async function GET(request) {
   const { searchParams } = new URL(request.url);
@@ -9,12 +8,11 @@ export async function GET(request) {
     return Response.json({ error: "Query is required" }, { status: 400 });
   }
 
-  const res = await fetch(`${NINJAS_API_URL}?name=${encodeURIComponent(query)}`, {
-    headers: { "X-Api-Key": NINJAS_API_KEY },
-  });
+  // Use ?q= instead of ?name=
+  const res = await fetch(`${JIKAN_API_URL}/anime?q=${encodeURIComponent(query)}`);
 
   if (!res.ok) {
-    return Response.json({ error: "Failed to fetch from Ninjas API" }, { status: 500 });
+    return Response.json({ error: "Failed to fetch from Jikan API" }, { status: 500 });
   }
 
   const data = await res.json();
@@ -29,14 +27,13 @@ export async function POST(request) {
     return Response.json({ error: "Query is required" }, { status: 400 });
   }
 
-  const res = await fetch(`${NINJAS_API_URL}?name=${encodeURIComponent(query)}`, {
-    headers: { "X-Api-Key": NINJAS_API_KEY },
-  });
+  const res = await fetch(`${JIKAN_API_URL}/anime?q=${encodeURIComponent(query)}`);
 
   if (!res.ok) {
-    return Response.json({ error: "Failed to fetch from Ninjas API" }, { status: 500 });
+    return Response.json({ error: "Failed to fetch from Jikan API" }, { status: 500 });
   }
 
   const data = await res.json();
   return Response.json(data);
 }
+
