@@ -5,6 +5,7 @@ import { MongoClient } from 'mongodb'
 const uri = process.env.MONGODB_URI
 const options = { 
   useNewUrlParser: true,
+  useUnifiedTopology: true,
 }
 
 let client

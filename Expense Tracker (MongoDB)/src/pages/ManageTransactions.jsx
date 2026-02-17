@@ -5,7 +5,7 @@ import { Edit2, Trash2, Globe } from 'lucide-react';
 
 const ManageTransactions = () => {
     const [showTransaction, setShowTransaction] = useState(false);
-   const [savedTransactions, setsavedTransactions] = useState([]);
+    const [savedTransactions, setsavedTransactions] = useState([]);
 
     const [editIndex, setEditIndex] = useState(null);
     const hasMounted = useRef(false);
